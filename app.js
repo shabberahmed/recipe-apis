@@ -236,6 +236,20 @@ app.delete('/api/recipes/:recipeId', async (req, res) => {
   }
 });
 
+// Filter recipes by recipe type
+app.get('/recipes/filter', async (req, res) => {
+  const { recipeType } = req.query;
 
+  try {
+    const recipes = await Recipe.find({
+      recipeType,
+      isPublic: true
+    });
+
+    res.json(recipes);
+  } catch (error) {
+    res.status(400).json({ message: 'Failed to fetch recipes', error });
+  }
+});
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
