@@ -50,7 +50,7 @@ app.post('/users/login', async (req, res) => {
     const user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
-      res.json({ token });
+      res.json({ token ,user:user});
     } else {
       res.status(401).json({ message: 'Invalid credentials' });
     }
