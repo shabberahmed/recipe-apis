@@ -70,9 +70,9 @@ app.get('/recipes/public', async (req, res) => {
 });
 
 // Get private recipes
-app.get('/recipes/private', async (req, res) => {
+app.get('/recipes/private/:user', async (req, res) => {
   try {
-    const recipes = await Recipe.find({ user: req.body.user, isPublic: false });
+    const recipes = await Recipe.find({ user: req.params.user, isPublic: false });
     console.log(recipes)
     res.json(recipes);
   } catch (error) {
